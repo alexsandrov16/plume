@@ -3,7 +3,7 @@
 namespace Plume\Kernel;
 
 /**
- * undocumented class
+ * @package Plume Kernel
  */
 class App
 {
