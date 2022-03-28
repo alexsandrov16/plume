@@ -12,7 +12,7 @@ define('PLUME', true);
 defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 defined('ABS_PATH') || define('ABS_PATH', __DIR__ . DS);
 
-//Autocargador
+//Autoloader function
 require 'src/autoload.php';
 
 $app = new App;
