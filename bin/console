@@ -1,0 +1,20 @@
+#!/usr/bin/php
+<?php
+
+if ($argc != 2 || in_array($argv[1], array('--help', '-help', '-h', '-?'))) {
+?>
+
+Éste es un script PHP de línea de comandos con un parámetro.
+
+  Uso:
+  <?php echo $argv[0]; ?> <parámetro>
+
+  <parámetro> puede ser alguna palabra que desee
+  mostrar en pantalla. Con las opciones --help, -help, -h,
+  o -?, puede mostrarse esta ayuda.
+
+<?php
+} else {
+    echo $argv[1].PHP_EOL;
+}
+?>
