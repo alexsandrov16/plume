@@ -9,6 +9,11 @@ class App
 {
     public function __construct()
     {
-        echo __CLASS__;
+        //echo __CLASS__;
+    }
+
+    public function version()
+    {
+        echo 0.3;
     }
 }
