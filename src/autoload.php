@@ -1,4 +1,5 @@
 <?php
+defined('PLUME') || die;
 
 /**
  * Autoload PSR4
