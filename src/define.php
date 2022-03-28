@@ -6,7 +6,7 @@ defined('PLUME') || die;
  * @author alexsandrov16
  * @license MIT
  */
-
+/*
 //Flatpage
 defined('FP_CORE') || define('FP_CORE', FP_PATH . 'core' . DS);
 defined('FP_SRC') || define('FP_SRC', FP_PATH . 'src' . DS);
@@ -18,3 +18,4 @@ defined('FP_BACKUPS') || define('FP_BACKUPS', ABS_PATH . 'contents' . DS . 'back
 defined('FP_UPLOAD') || define('FP_UPLOAD', ABS_PATH . 'contents' . DS . 'upload' . DS);
 //Themes
 defined('FP_THEMES') || define('FP_THEMES', ABS_PATH . 'template' . DS);
+*/
