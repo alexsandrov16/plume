@@ -13,6 +13,8 @@ defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 defined('ABS_PATH') || define('ABS_PATH', __DIR__ . DS);
 
 //Autoloader function
-require_once 'src/bootloader.php';
+require_once 'src/bootstrap/app.php';
 
-$app = new App;
+//$app = new App;
+
+echo __FILE__;
