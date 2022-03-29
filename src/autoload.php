@@ -2,7 +2,7 @@
 defined('PLUME') || die;
 
 /**
- * Autoload PSR4
+ * @package Autoload PSR4
  */
 
 $namespace = [

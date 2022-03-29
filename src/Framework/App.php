@@ -12,7 +12,7 @@ class App
         //echo __CLASS__;
     }
 
-    public function version()
+    public function run()
     {
         echo 0.3;
     }
