@@ -8,4 +8,4 @@ Un gestor de contenidos basado en archivos escrito en PHP, pensado para servir p
 - PHP 7.3 o superior (```mbstring```, ```json``` activo)
 
 ## Licencia
-**Plume** es un software de código abierto con licencia [MIT](https://github.com/alexsandrov16/plume/blob/master/LICENSE).
+**Plume** es un software de código abierto distribuido bajo la licencia [MIT](https://github.com/alexsandrov16/plume/blob/master/LICENSE).
