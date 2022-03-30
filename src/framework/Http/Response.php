@@ -100,7 +100,7 @@ class Response
 
     use MessageHttp;
 
-    public function __construct(Int $status = 200, $version = '1.1')
+    public function __construct()
     {
     }
 
@@ -166,7 +166,7 @@ class Response
         return $this->reason_phrase;
     }
 
-    public function send()
+    public function send(Int $status = 200, $version = '1.1')
     {
         # code...
     }
