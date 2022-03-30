@@ -176,7 +176,7 @@ trait MessageHttp
      * @param string $name Nombre de campo de encabezado que no distingue entre mayúsculas y minúsculas para eliminar. 
      * @return static 
      */
-    public function withoutHeader($name)
+    public function removeHeader($name)
     {
         unset($this->getHeaders()[$name]);
         return $this;
