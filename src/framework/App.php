@@ -7,6 +7,8 @@ namespace Plume\Kernel;
  */
 class App
 {
+    static $name = 'Plume';
+
     public function __construct()
     {
         //echo __CLASS__;
