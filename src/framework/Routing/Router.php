@@ -4,6 +4,7 @@ namespace Plume\Kernel\Routing;
 
 use Plume\Kernel\Http\Request;
 use Plume\Kernel\Http\Response;
+use Plume\Kernel\Http\Uri;
 
 defined('PLUME') || die;
 /**
@@ -11,10 +12,23 @@ defined('PLUME') || die;
  */
 class Router
 {
-    private $request;
-    private $response;
-    public $routes = [];
+    protected $request;
+    protected $response;
+    protected $rutes = [];
+    protected $regex = [
+        '(:any)'      => '.*',
+        '(:segment)'  => '[^/]+',
+        '(:alphanum)' => '[a-zA-Z0-9]+',
+        '(:num)'      => '[0-9]+',
+        '(:alpha)'    => '[a-zA-Z]+',
+        '(:hash)'     => '[^/]+',
+    ];
 
+    public $namespace = [];
+
+    /**
+     * 
+     */
     public function __construct(Request $request, Response $response)
     {
         $this->request = $request;
@@ -24,39 +38,67 @@ class Router
     /**
      * 
      */
-    public function add(Type $var = null)
+    public function add(String $method, String $route, $action, array $headers = [])
     {
-        # code...
+        foreach ($headers as $name => $value) {
+            $this->response->setHeader($name, $value);
+        }
+        $this->rutes[strtoupper($method)][$route] = $action;
     }
 
     /**
      * 
      */
-    public function get(Type $var = null)
+    public function get(String $route, $action, array $headers = [])
     {
-        # code...
+        return $this->add('GET', $route, $action, $headers);
     }
 
     /**
      * 
      */
-    public function post(Type $var = null)
+    public function post(String $route, $action, array $headers = [])
     {
-        # code...
+        return $this->add('POST', $route, $action, $headers);
     }
 
     /**
      * 
      */
-    public function dispatch(Type $var = null)
+    public function dispatch()
     {
-        # code...
+        foreach ($this->rutes as $method => $rutes) {
+
+            if ($this->request->getMethod() === $method) {
+                foreach ($rutes as $rute => $action) {
+
+                    //ruta registrada                                                          Uri Absoluta
+                    /*$uri = preg_replace(array_keys($this->regex), array_values($this->regex), 'http://localhost/plume' . str_replace(['{', '}'], '', $rute));
+
+                    echo $uri;*/
+                    //parsear path
+                    $path = preg_replace(array_keys($this->regex), array_values($this->regex), str_replace(['{', '}'], '', $rute));
+
+                    //buscar coinsidencias de rutas
+                    if (preg_match("~^/?$path/?$~", $this->request->getRequestTarget())) {
+
+                        //establecer path de la ruta
+                        $uri = new Uri('http://localhost/plume/');
+                        str_replace($uri->getPath(), '', $path);
+
+
+                    }
+                }
+            }
+        }
+        //throw new Exception("Error Processing Request", 404);
+        //die('Error 404');
     }
 
     /**
      * 
      */
-    public function redirect(Type $var = null)
+    public function redirect()
     {
         # code...
     }
