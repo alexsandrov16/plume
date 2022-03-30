@@ -72,27 +72,24 @@ class Router
             if ($this->request->getMethod() === $method) {
                 foreach ($rutes as $rute => $action) {
 
-                    //ruta registrada                                                          Uri Absoluta
-                    /*$uri = preg_replace(array_keys($this->regex), array_values($this->regex), 'http://localhost/plume' . str_replace(['{', '}'], '', $rute));
-
-                    echo $uri;*/
                     //parsear path
                     $path = preg_replace(array_keys($this->regex), array_values($this->regex), str_replace(['{', '}'], '', $rute));
+                    
+                    //establecer path de la reques target
+                    $uri = new Uri('http://localhost/plume');
+                    $request = str_replace($uri->getPath(), '', $this->request->getRequestTarget());
 
                     //buscar coinsidencias de rutas
-                    if (preg_match("~^/?$path/?$~", $this->request->getRequestTarget())) {
+                    if (preg_match("~^/?$path/?$~", $request)) {
 
-                        //establecer path de la ruta
-                        $uri = new Uri('http://localhost/plume/');
-                        str_replace($uri->getPath(), '', $path);
-
+                        echo 'yupii';return;
 
                     }
                 }
             }
         }
         //throw new Exception("Error Processing Request", 404);
-        //die('Error 404');
+        die('Error 404');
     }
 
     /**

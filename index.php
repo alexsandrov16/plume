@@ -30,7 +30,7 @@ $response = new Response;
 
 $router = new Router($request, $response);
 
-$router->add('get', '/{(:any)}/{name}', function()
+$router->add('get', '/', function()
 {
     echo 'Hola ';//.$app::$name;
 });
