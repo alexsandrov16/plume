@@ -69,7 +69,7 @@ class Request
      */
     public function setRequestTarget($requestTarget = null): self
     {
-        $this->request = $requestTarget;
+        $this->request_target = $requestTarget;
 
         return $this;
     }
