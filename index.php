@@ -23,6 +23,12 @@ $app = new App;
 //$app->run();*/
 
 /**** ROUTER ***/
+class Myclass{
+    public function index()
+    {
+        echo 'Hola mundo';
+    }
+}
 
 $request = new Request;
 $response = new Response;
@@ -30,9 +36,11 @@ $response = new Response;
 
 $router = new Router($request, $response);
 
-$router->add('get', '/', function()
+$router->add('get', '/{name}', function($name)// use ($app)
 {
-    echo 'Hola ';//.$app::$name;
+    echo "Hola $name";//.$app::$name;
 });
+
+//$router->add('get', '/(:any)', [Myclass::class, 'index']);
 
 $router->dispatch();
