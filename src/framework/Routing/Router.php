@@ -69,61 +69,104 @@ class Router
     public function dispatch()
     {
         foreach ($this->rutes as $method => $rutes) {
-
-            if ($this->request->getMethod() === $method) {
+            if ($method === $this->request->getMethod()) {
                 foreach ($rutes as $rute => $action) {
 
-                    //
-                    $arr = explode('/', $rute);
-                    foreach ($arr as $key => $value) {
-                        if (preg_match('/[(]/', $value)) {
-                            $arr[$key] = preg_replace('/{.*}/', '', $value);
-                        } else {
-                            $arr[$key] = preg_replace('/{.*}/', '(:any)', $value);
-                        }
-                    }
-
-                    //parsear path
-                    $path = preg_replace(array_keys($this->regex), array_values($this->regex), implode('/', $arr));
+                    // Ruta registrada
+                    $path = preg_replace(array_keys($this->regex), array_values($this->regex), str_replace(['{', '}'], '', $rute));
 
 
-                    //establecer path de la reques target
+                    // Establecer path de la reques target
                     $uri = new Uri('http://localhost/plume');
                     $request = str_replace($uri->getPath(), '', $this->request->getRequestTarget());
 
-                    //buscar coinsidencias de rutas
-                    if (preg_match("~^/?$path/?$~", $request)) {
+                    // Comparar rutas
+                    if (preg_match('~^/?' . $path . '/?$~', $request)) {
 
-
-                        var_dump($request);
-
-
-/*                        
-
-                        //callback function
-                        if (is_object($action)) {
-                            $fun = new ReflectionFunction($action);
-
-
-                            if (empty($fun->getParameters())) {
-                                return $action();
-                            }
-
-                            //if (count($param) === $reflection->getNumberOfRequiredParameters()) {
-                            return call_user_func_array($action, $param);
-                            //}
-                        }
-
-                        */
-
-
+                        return $this->callback($action, $this->params($request, $rute));
                     }
                 }
             }
         }
-        //throw new Exception("Error Processing Request", 404);
-        die('Error 404');
+
+        die(404);
     }
+
+    public function params($request, $rute)
+    {
+        $arr = explode('/', $request);
+        foreach (explode('/', $rute) as $key => $value) {
+            if (!preg_match('/[(]/', $value)) {
+                unset($arr[$key]);
+            }
+        }
+        return $arr;
+    }
+
+    public function callback($callback, $params)
+    {
+        //callback function
+        if (is_object($callback)) {
+            return $this->callFunction($callback, $params);
+        }
+
+        //calback object
+        if (is_array($callback)) {
+            return $this->callObject($callback[0], $callback[1], $params);
+        }
+        //die('Not found');
+    }
+
+    public function callFunction($function, $params)
+    {
+        $reflaction = new ReflectionFunction($function);
+
+
+        if (empty($reflaction->getParameters())) {
+            return $function();
+        }
+
+        return call_user_func_array($function, $params);
+    }
+
+    public function callObject($class, $method = null, $params)
+    {
+        if (class_exists($class)) {
+            $instance = new $class;
+
+            if (!empty($method)) {
+                return $instance->index();
+            }
+
+            if (method_exists($instance, $method)) {
+                $reflaction = new \ReflectionMethod($instance, $method);
+
+                //var_dump($r_method);
+
+                if ($reflaction->isPublic()) {
+
+                    if (empty($reflaction->getParameters())) {
+                        return $instance->$method();
+                    }
+
+                    //return call_user_func_array(array($instance, $callback[1]), $params);
+                }
+            }
+            //throw new Exception("Not Found Method $controller::$method");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function obj($class, $method, $param = [])
     {
