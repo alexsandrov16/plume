@@ -114,7 +114,7 @@ class Router
         if (is_array($callback)) {
             return $this->callObject($callback[0], $callback[1], $params);
         }
-        //die('Not found');
+        die('Not found');
     }
 
     public function callFunction($function, $params)
