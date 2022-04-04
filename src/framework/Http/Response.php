@@ -10,7 +10,7 @@ defined('PLUME') || die;
  */
 class Response
 {
-    protected static $status = [
+    protected $status = [
         //1xx: Informational - Request received, continuing process
         100 => 'Continue', //[RFC-ietf-httpbis-semantics, Section 15.2.1]
         101 => 'Switching Protocols', //[RFC-ietf-httpbis-semantics, Section 15.2.2]
@@ -143,6 +143,7 @@ class Response
             die('error \InvalidArgumentException');
         }
 
+        $this->code = $code;
         $this->reason_phrase = empty($reasonPhrase) ? $this->status[$code] : $reasonPhrase;
 
         return $this;
@@ -166,8 +167,20 @@ class Response
         return $this->reason_phrase;
     }
 
-    public function send(Int $status = 200, $version = '1.1')
+    public function send(Int $status = 200, $headers = [])
     {
-        # code...
+        if (!empty($headers)) {
+            foreach ($headers as $name => $value) {
+                $this->setHeader($name, $value);
+            }
+        }
+
+        $this->setStatus($status);
+
+        header('HTTP/'.$this->getProtocolVersion().' '.$this->getStatusCode().' '.$this->getReasonPhrase());
+
+        foreach ($this->getHeaders() as $name => $value) {
+            header("$name: $value");
+        }
     }
 }

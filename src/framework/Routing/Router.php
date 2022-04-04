@@ -34,33 +34,43 @@ class Router
     {
         $this->request = $request;
         $this->response = $response;
+
+        $this->response->setProtocolVersion($this->request->getProtocolVersion());
     }
 
     /**
      * 
      */
-    public function add(String $method, String $route, $action, array $headers = [])
+    public function add(String $method, String $rute, $action, array $headers = [])
     {
+        $method = strtoupper($method);
         foreach ($headers as $name => $value) {
             $this->response->setHeader($name, $value);
         }
-        $this->rutes[strtoupper($method)][$route] = $action;
+
+        $this->rutes[$method][$rute] = $action;
+        $this->rutes[$method]['headers'] = $headers;
     }
 
     /**
      * 
      */
-    public function get(String $route, $action, array $headers = [])
+    public function get(String $rute, $action, array $headers = [])
     {
-        return $this->add('GET', $route, $action, $headers);
+        return $this->add('GET', $rute, $action, $headers);
     }
 
     /**
      * 
      */
-    public function post(String $route, $action, array $headers = [])
+    public function post(String $rute, $action, array $headers = [])
     {
-        return $this->add('POST', $route, $action, $headers);
+        return $this->add('POST', $rute, $action, $headers);
+    }
+
+    public function getRutes():array
+    {
+        return $this->rutes;
     }
 
     /**
@@ -73,7 +83,7 @@ class Router
                 foreach ($rutes as $rute => $action) {
 
                     // Ruta registrada
-                    $path = preg_replace(array_keys($this->regex), array_values($this->regex), str_replace(['{', '}'], '', $rute));
+                    $path = preg_replace(array_keys($this->regex), array_values($this->regex), $rute);
 
 
                     // Establecer path de la reques target
@@ -81,7 +91,11 @@ class Router
                     $request = str_replace($uri->getPath(), '', $this->request->getRequestTarget());
 
                     // Comparar rutas
-                    if (preg_match('~^/?' . $path . '/?$~', $request)) {
+                    if (preg_match('#^' . $path . '$#', $request)) {
+
+                        //var_dump($rute);return;
+
+                        $this->response->send();
 
                         return $this->callback($action, $this->params($request, $rute));
                     }
@@ -89,7 +103,7 @@ class Router
             }
         }
 
-        die(404);
+        die('404');
     }
 
     public function params($request, $rute)

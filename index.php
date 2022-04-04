@@ -26,7 +26,8 @@ $app = new App;
 //$app->run();
 
 /**** ROUTER ***/
-class Myclass{
+class Myclass
+{
     public function index()
     {
         echo 'Hola mundo';
@@ -61,13 +62,33 @@ $router->add('/{var}/algo/{var2}(:num)', function($var, $var2)
 }, 'get');
 */
 
-$router->add('get', '/(:any)', [Myclass::class, 'index']);
+//$router->add('get', '/(:any)', [Myclass::class, 'index']);
 
-$router->dispatch();
+$headers = ['content-type' => 'application/json'];
+
+$router->get('/', function () use($app) {
+    echo '{"running":"'.$app.'"}';
+},$headers);
+
+$router->get('/post', function () {
+    echo <<<HTML
+    <form action="" method="post">
+        <input type="text" name="" id="">
+        <button type="submit">send</button>
+    </form>
+    HTML;
+},['content-type' => 'text/html']);
+$router->post('/post', function () {
+    var_dump($_POST);
+});
+
+//$router->dispatch();
+
+var_dump($router->getRutes());
 
 
 echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
 
-echo "<br> <b> ".round((memory_get_usage() - $memory_start)/(1024*1024),4). "MB";
+echo "<br> <b> " . round((memory_get_usage() - $memory_start) / (1024 * 1024), 4) . "MB";
 
-echo "<br>". round((microtime(true) - $time)*1000,4)."ms";
+echo "<br>" . round((microtime(true) - $time) * 1000, 4) . "ms";
