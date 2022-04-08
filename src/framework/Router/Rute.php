@@ -20,7 +20,7 @@ class Rute
      *
      * @param string|array $method metodo HTTP
      * @param string $rute ruta
-     * @param string|array|object $action accion al resolver la ruta
+     * @param array|object $action accion al resolver la ruta
      * @param array $options cabecera HTTP
      * @return type
      * @throws conditon
@@ -43,7 +43,7 @@ class Rute
      * Undocumented function long description
      *
      * @param string $rute ruta
-     * @param string|array|object $action accion al resolver la ruta
+     * @param array|object $action accion al resolver la ruta
      * @param array $options cabecera HTTP
      * @return type
      **/
@@ -58,7 +58,7 @@ class Rute
      * Undocumented function long description
      *
      * @param string $rute ruta
-     * @param string|array|object $action accion al resolver la ruta
+     * @param array|object $action accion al resolver la ruta
      * @param array $options cabecera HTTP
      * @return type
      **/
@@ -74,7 +74,7 @@ class Rute
      *
      * @param array $method metodos HTTP
      * @param string $rute ruta
-     * @param string|array|object $action accion al resolver la ruta
+     * @param array|object $action accion al resolver la ruta
      * @param array $options cabecera HTTP
      * @return type
      **/
@@ -92,7 +92,7 @@ class Rute
      *
      * @param string $method metodo HTTP
      * @param string $rute ruta
-     * @param string|array|object $action accion al resolver la ruta
+     * @param array|object $action accion al resolver la ruta
      * @param array $options cabecera HTTP
      * @return type
      **/

@@ -92,7 +92,7 @@ class Dispatcher
      * Realiza una devoluciones de llamada/controladores de ruta inyectan los
      * metodos y parametros correspondientes
      *
-     * @param object|array|string $actions func anonima| controlador-metodo a ser invocado
+     * @param object|array $actions func anonima| controlador-metodo a ser invocado
      * @param array $params parametros
      * @return object
      * @throws conditon
@@ -110,12 +110,30 @@ class Dispatcher
             return call_user_func_array($actions, $params);
         }
 
-        if (is_string($actions)) {
-            return (new $actions)->index();
-        }
-
         if (is_array($actions)) {
-            # code...
+            if (class_exists($actions[0])) {
+                $instance = new $actions[0];
+
+                //if (!empty($method)) {
+                    return $instance->index();
+                //}
+
+                /*if (method_exists($instance, $method)) {
+                    $reflaction = new \ReflectionMethod($instance, $method);
+
+                    //var_dump($r_method);
+
+                    if ($reflaction->isPublic()) {
+
+                        if (empty($reflaction->getParameters())) {
+                            return $instance->$method();
+                        }
+
+                        //return call_user_func_array(array($instance, $callback[1]), $params);
+                    }
+                }*/
+                //throw new Exception("Not Found Method $controller::$method");
+            }
         }
     }
 
