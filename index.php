@@ -5,9 +5,7 @@
  */
 
 use Plume\Kernel\App;
-use Plume\Kernel\Http\Request;
-use Plume\Kernel\Http\Response;
-use Plume\Kernel\Routing\Router;
+use Plume\Kernel\Router\Rute;
 
 $memory_start = memory_get_usage();
 $time = microtime(true);
@@ -26,65 +24,63 @@ $app = new App;
 //$app->run();
 
 /**** ROUTER ***/
-class Myclass
-{
-    public function index()
-    {
-        echo 'Hola mundo';
-    }
-}
-
-$request = new Request;
-$response = new Response;
-
-
-$router = new Router($request, $response);
 /*
-$router->add('get', '/(:alpha)/sal/(:num)', function($name)// use ($app)
-{
-    echo "Hola $name";//.$app::$name;
-});
+$rute = [
+    '/' => [
+        'method' => 'get',
+        'action' => function(){echo 'hola';},
+        'headers' => ['content type'=> 'text/html']
+    ],
+    '/home' => [
+        'method' => ['get','post'],
+        'action' => function(){echo 'hola';},
+        'headers' => ['content type'=> 'text/html']
+    ],
+    '/about' => [
+        'method' => '*',
+        'action' => function(){echo 'hola';},
+        'headers' => ['content type'=> 'text/html']
+    ]
+];*/
 
+
+//var_dump($rute);
 /*
-$router->add('/', function()
-{
-    echo 'Hola Mundo!';
-}, 'get');
+$rutes = new Rute;
+$rutes->setRutes($rute);
 
-$router->add('/{var}', function($var)
-{
-    echo 'Hola Mundo!';
-}, 'get');
+$router = new Router;
 
-$router->add('/{var}/algo/{var2}(:num)', function($var, $var2)
-{
-    echo 'Hola Mundo!';
-}, 'get');
+$router->dispatch($rutes->getRutes());
 */
 
-//$router->add('get', '/(:any)', [Myclass::class, 'index']);
+$rute = new Rute;
 
-$headers = ['content-type' => 'application/json'];
-
-$router->get('/', function () use($app) {
-    echo '{"running":"'.$app.'"}';
-},$headers);
-
-$router->get('/post', function () {
-    echo <<<HTML
-    <form action="" method="post">
-        <input type="text" name="" id="">
-        <button type="submit">send</button>
-    </form>
-    HTML;
-},['content-type' => 'text/html']);
-$router->post('/post', function () {
-    var_dump($_POST);
+$rute->get('/',function() use ($app)
+{
+    echo "Hola bienvenido a ".$app::$name;
 });
 
-//$router->dispatch();
+$rute->get('/hola/(:any)',function($name)
+{
+    echo "Hola $name!";
+});
 
-var_dump($router->getRutes());
+$rute->map(['get','post'], '/form', function()
+{
+    if ($_POST) {
+        echo 'Hola soy un dato con valor '.$_POST['data'];return;
+    }
+
+    echo <<<HTML
+    <form action="" method="post">
+    <input type="text" name="data" id="">
+    <button type="submit">enviar</button>
+    </form>
+    HTML;
+});
+
+$rute->routing();
 
 
 echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>";
