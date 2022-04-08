@@ -11,9 +11,9 @@ defined('PLUME') || die;
 /**
  * Disparador de rutas
  */
-class Dispatch
+class Dispatcher
 {
-    /** @var array $regex description */
+    /** @var array $regex marcadores de posición */
     private $regex = [
         '(:any)'      => '[^/]+',         //cualquier caracter excepto /
         '(:alphanum)' => '[a-zA-Z0-9]+',  //caracteres alfanumericos
@@ -28,10 +28,8 @@ class Dispatch
     /**
      * Constructor
      *
-     * Undocumented function long description
-     *
-     * @param Type $var Description
-     * @return type
+     * @param array $rute rutas registradas
+     * @return object
      * @throws conditon
      **/
     public function __construct(array $rutes)
@@ -54,13 +52,12 @@ class Dispatch
     }
 
     /**
-     * undocumented function summary
+     * Marcador de posicion
      *
-     * Undocumented function long description
+     * Cambia los marcadores de posición por patrón de expresión regular en la URI
      *
-     * @param Type $var Description
-     * @return type
-     * @throws conditon
+     * @param string $rute Description
+     * @return string
      **/
     private function placeholder(string $rute)
     {
@@ -68,13 +65,13 @@ class Dispatch
     }
 
     /**
-     * undocumented function summary
+     * Validar metodo HTTP
      *
-     * Undocumented function long description
+     * Verifica que el metodo HTTP de la solicitud coincida con el metodo
+     * epsecificado en la ruta
      *
-     * @param Type $var Description
-     * @return type
-     * @throws conditon
+     * @param array|string $method metodo HTTP
+     * @return bool
      **/
     private function validateMethod($method)
     {
@@ -90,12 +87,14 @@ class Dispatch
     }
 
     /**
-     * undocumented function summary
+     * Callback
      *
-     * Undocumented function long description
+     * Realiza una devoluciones de llamada/controladores de ruta inyectan los
+     * metodos y parametros correspondientes
      *
-     * @param Type $var Description
-     * @return type
+     * @param object|array|string $actions func anonima| controlador-metodo a ser invocado
+     * @param array $params parametros
+     * @return object
      * @throws conditon
      **/
     private function callActions($actions, $params)
@@ -110,15 +109,24 @@ class Dispatch
 
             return call_user_func_array($actions, $params);
         }
+
+        if (is_string($actions)) {
+            return (new $actions)->index();
+        }
+
+        if (is_array($actions)) {
+            # code...
+        }
     }
 
     /**
-     * undocumented function summary
+     * Obtener parametros
      *
-     * Undocumented function long description
+     * Devuelve las coincidencias obtenidas de los  marcadores de posición 
+     * como parámetros de ruta
      *
-     * @param Type $var Description
-     * @return type
+     * @param array $matchs coincidencias obtenidas
+     * @return array
      * @throws conditon
      **/
     private function parameters(array $matchs)
@@ -134,13 +142,11 @@ class Dispatch
     }
 
     /**
-     * undocumented function summary
+     * Destino de la solicitud 
      *
-     * Undocumented function long description
+     * Establece el segmento de URI del destino de la solicitud 
      *
-     * @param Type $var Description
      * @return string
-     * @throws conditon
      **/
     private function request()
     {

@@ -43,7 +43,7 @@ class Request
      * Si no hay un URI disponible y no se ha especificado ningún objetivo de solicitud 
      * proporcionado, este método DEBE devolver la cadena "/". 
      * 
-     * cadena @return 
+     * @return string
      */
     public function getRequestTarget()
     {
