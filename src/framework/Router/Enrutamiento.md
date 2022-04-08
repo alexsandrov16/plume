@@ -104,11 +104,11 @@ También puede usar una matriz con los valores del controlador y el método a in
 $rute->get('/', [Foo\Bar\MyController::class,'index']);
 ```
 
-En caso de definir solamente el controlador en una matriz de una sola posición o como una cadena de caracteres se cargara de manera predeterminada el método ```index()```.
+El método ```index()``` del controlador definido se cargara de manera predeterminada solamente definiendo una matriz de una sola posición.
 
 ```php
 $rute->get('/', [Foo\Bar\MyController::class]);
-$rute->get('/', 'Foo\Bar\MyController');
+$rute->get('/', ['Foo\Bar\AnotherController']);
 ```
 
 ## Marcadores de posición 
