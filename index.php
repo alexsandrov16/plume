@@ -54,6 +54,18 @@ $router = new Router;
 $router->dispatch($rutes->getRutes());
 */
 
+class MyController{
+    public function __construct()
+    {
+        
+    }
+
+    public function index()
+    {
+        echo __CLASS__;
+    }
+}
+
 $rute = new Rute;
 
 $rute->get('/',function() use ($app)
@@ -79,6 +91,8 @@ $rute->map(['get','post'], '/form', function()
     </form>
     HTML;
 });
+
+$rute->get('/class',[MyController::class]);
 
 $rute->routing();
 
