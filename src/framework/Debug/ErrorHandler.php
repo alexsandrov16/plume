@@ -11,22 +11,40 @@ use Throwable;
  */
 class ErrorHandler
 {
-    protected $config;
+    protected $env;
 
     protected $templ = true;
 
-    public function __construct(Bool $config)
+    /**
+     * undocumented function summary
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
+    public function __construct(Bool $env)
     {
         $this->ob_level = ob_get_level();
-        $this->config = $config;
+        $this->env = $env;
 
-        if ($this->config) {
+        if ($this->env) {
             error_reporting(E_ALL);
         } else {
             ini_set('display_errors', '0');
         }
     }
 
+    /**
+     * undocumented function summary
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
     public function start()
     {
         set_exception_handler([$this, 'exceptionHandler']);
@@ -34,6 +52,15 @@ class ErrorHandler
         register_shutdown_function([$this, 'shutdownHandler']);
     }
 
+    /**
+     * Manejador de excepciones
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
     public function exceptionHandler(Throwable $exception)
     {
         // Log 
@@ -42,6 +69,15 @@ class ErrorHandler
         $this->render($exception);
     }
 
+    /**
+     * Manejador de errores
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
     public function errorHandler(int $severity, string $message, string $file = null, int $line = null)
     {
         if (!(error_reporting() & $severity)) {
@@ -51,6 +87,15 @@ class ErrorHandler
         throw new ErrorException($message, 0, $severity, $file, $line);
     }
 
+    /**
+     * Manejador de cierre
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
     public function shutdownHandler()
     {
         $error = error_get_last();
@@ -63,6 +108,15 @@ class ErrorHandler
         }
     }
 
+    /**
+     * Renderizado
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
     protected function render(Throwable $e)
     {
         // Determine the views
@@ -96,6 +150,15 @@ class ErrorHandler
         return ob_end_clean();
     }
 
+    /**
+     * undocumented function summary
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
     protected function collectVars(Throwable $e): array
     {
         $data = [
@@ -162,6 +225,15 @@ class ErrorHandler
         return $data;
     }
 
+    /**
+     * undocumented function summary
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
     protected function determineView(Int $code, bool $env = false)
     {
         foreach (new DirectoryIterator(FP_THEMES . env('template')) as $fileinfo) {
@@ -176,9 +248,18 @@ class ErrorHandler
         return (!$env) ? 'error' : 'debug';
     }
 
+    /**
+     * undocumented function summary
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
     public function logs()
     {
-                        // implementar para q no registre los errores 404
+        // implementar para q no registre los errores 404
         if (env('logs')/* && !in_array($statusCode, $this->config->ignoreCodes, true)*/) {
             //implementar logs function
             /*log_message('critical', $exception->getMessage() . "\n{trace}", [

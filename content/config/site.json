@@ -2,7 +2,7 @@
     "title"      : "Mi Sitio",
     "description" : "Sitio de pruebas",
     "base_url"    : "http://localhost/plume",
-    "debug"       : false,
+    "debug"       : true,
     "template"    : "default",
     "timezone"    : "America/Havana",
     "time_format" : "Y-m-d H:i:s",
