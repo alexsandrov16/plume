@@ -1,8 +1,21 @@
 <?php
+defined('PLUME') || die;
+
+use Plume\Kernel\Config\Config;
 
 defined('PLUME') || die;
 
-function env()
+/**
+ * undocumented function summary
+ *
+ * Undocumented function long description
+ *
+ * @param Type $var Description
+ * @return type
+ * @throws conditon
+ **/
+function env(string $name)
 {
-    # code...
+    $name = strtoupper($name);
+    return Config::hasDisableFunc('putenv') ? $_ENV[$name] : getenv($name);
 }

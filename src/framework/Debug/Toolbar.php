@@ -1,49 +1,17 @@
 <?php
 
-namespace Plume\Kernel;
-
-use Plume\Kernel\Config\Config;
-use Plume\Kernel\Debug\ErrorHandler;
+namespace Plume\Kernel\Debug;
 
 defined('PLUME') || die;
 
 /**
- * @package Plume Kernel
+ * undocumented class
  */
-class App
+class Toolbar
 {
-    const _name = 'Plume';
-    const _version = '0.6 alpha';
-    const php_version = 7.3;
-    private static $memory;
-    private static $microtime;
-
-    /** @var Type $var description */
-    protected $config;
-
-    public function __construct(int $memory, float $microtime)
+    public function render()
     {
-        self::$memory = $memory;
-        self::$microtime = $microtime;
         
-        //iniciando configuracion
-        Config::init();
-
-        //Manejador de excepciones
-        (new ErrorHandler(env('debug')))->start();
-    }
-
-    public function run()
-    {
-        //require ABS_PATH . 'src/plume/index.html';
-        require ABS_PATH . 'src/plume/router.php';
-    }
-
-    /**
-     * debugbar
-     */
-    public function __destruct()
-    {
         $memory = round((memory_get_usage() - self::$memory) / (1024 * 1024), 4);
 
         $time = round((microtime(true) - self::$microtime) * 1000, 4);

@@ -49,6 +49,8 @@ class Dispatcher
                 }
             }
         }
+        //throw new Exception("Error Processing Request", 404);
+        
     }
 
     /**
@@ -113,15 +115,14 @@ class Dispatcher
         if (is_array($actions)) {
             if (class_exists($actions[0])) {
                 $instance = new $actions[0];
+                $method = $actions[1];
 
-                //if (!empty($method)) {
+                if (empty($method)) {
                     return $instance->index();
-                //}
+                }
 
-                /*if (method_exists($instance, $method)) {
+                if (method_exists($instance, $method)) {
                     $reflaction = new \ReflectionMethod($instance, $method);
-
-                    //var_dump($r_method);
 
                     if ($reflaction->isPublic()) {
 
@@ -129,11 +130,13 @@ class Dispatcher
                             return $instance->$method();
                         }
 
-                        //return call_user_func_array(array($instance, $callback[1]), $params);
+                        return call_user_func_array(array($instance, $method), $params);
                     }
-                }*/
+                    //throw new Exception("Method not public $controller::$method");
+                }
                 //throw new Exception("Not Found Method $controller::$method");
             }
+            //throw new Exception("Not Found Controller $controller");
         }
     }
 
@@ -145,7 +148,6 @@ class Dispatcher
      *
      * @param array $matchs coincidencias obtenidas
      * @return array
-     * @throws conditon
      **/
     private function parameters(array $matchs)
     {
@@ -168,7 +170,8 @@ class Dispatcher
      **/
     private function request()
     {
-        $uri = new Uri('http://localhost/plume');
+        //agregar base_uri
+        $uri = new Uri(env('base_url'));
         return str_replace($uri->getPath(), '', $this->request->getRequestTarget());
     }
 }
