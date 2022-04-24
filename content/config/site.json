@@ -1,0 +1,13 @@
+{
+    "title"      : "Mi Sitio",
+    "description" : "Sitio de pruebas",
+    "base_url"    : "http://localhost/plume",
+    "debug"       : false,
+    "template"    : "default",
+    "timezone"    : "America/Havana",
+    "time_format" : "Y-m-d H:i:s",
+    "language"    : "es-ES",
+    "charset"     : "UTF-8",
+    "session_name": "fp-site",
+    "root"        : false
+}
