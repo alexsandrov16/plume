@@ -2,9 +2,7 @@
 defined('PLUME') || die;
 
 /**
- * @package FlatPage
- * @author alexsandrov16
- * @license MIT
+ * @package Plume
  */
 /*
 //Flatpage
@@ -19,3 +17,12 @@ defined('FP_UPLOAD') || define('FP_UPLOAD', ABS_PATH . 'contents' . DS . 'upload
 //Themes
 defined('FP_THEMES') || define('FP_THEMES', ABS_PATH . 'template' . DS);
 */
+
+//bin
+defined('PATH_BIN') || define('PATH_BIN', ABS_PATH . 'bin');
+
+//contents
+defined('PATH_CFG') || define('PATH_CFG', ABS_PATH . 'content' . DS . 'config' . DS);
+defined('PATH_PAGES') || define('PATH_PAGES', ABS_PATH . 'content' . DS . 'pages' . DS);
+defined('PATH_LOGS') || define('PATH_LOGS', ABS_PATH . 'content' . DS . 'logs' . DS);
+defined('PATH_UPLOAD') || define('PATH_UPLOAD', ABS_PATH . 'content' . DS . 'upload' . DS);
