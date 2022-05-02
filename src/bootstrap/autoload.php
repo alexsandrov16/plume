@@ -7,7 +7,8 @@ defined('PLUME') || die;
 
 $namespace = [
     'Plume' => '',
-    'Plume\Kernel' => 'src/framework'
+    'Plume\Kernel' => 'src/framework',
+    'Tester' => 'src/plume/test'
 ];
 
 spl_autoload_register(function ($class) use ($namespace) {
