@@ -11,7 +11,7 @@ defined('PLUME') || die;
  * Undocumented function long description
  *
  * @param Type $var Description
- * @return type
+ * @return mixed
  * @throws conditon
  **/
 function env(string $name)
