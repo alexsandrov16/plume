@@ -13,7 +13,7 @@ defined('PLUME') || die;
 
 
 //Defines
-require_once 'define.php';
+require_once 'defines.php';
 
 //Autoloader PSR4
 require_once 'autoload.php';
