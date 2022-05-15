@@ -4,6 +4,8 @@ namespace Plume\Kernel\Debug;
 
 use DirectoryIterator;
 use ErrorException;
+use Plume\Kernel\Http\Request;
+use Plume\Kernel\Http\Response;
 use Throwable;
 
 /**
@@ -29,10 +31,12 @@ class ErrorHandler
         $this->ob_level = ob_get_level();
         $this->env = $env;
 
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
         if ($this->env) {
             error_reporting(E_ALL);
         } else {
-            ini_set('display_errors', '0');
+            error_reporting(0);
         }
     }
 
@@ -120,7 +124,7 @@ class ErrorHandler
     protected function render(Throwable $e)
     {
         // Determine the views
-        $view = $this->determineView($e->getCode(), $this->config);
+        $view = $this->determineView($e->getCode());
 
         //implementar plantillas para los temas
         /*if (! isset($view)) {
@@ -142,12 +146,15 @@ class ErrorHandler
             return ob_get_clean();
         })();*/
 
-        if (ob_get_length()) ob_end_clean();
-        $vars = $this->collectVars($e);
-        extract($vars);
-        include FP_PATH . "admin/$view.php";
-        ob_flush();
-        return ob_end_clean();
+        $request = new Request;
+        $headers = [];
+        $response = $e->getCode() != 404 ? new Response(500, $headers) : new Response(404, $headers);
+        #if (ob_get_length()) ob_end_clean();
+        extract($this->collectVars($e));
+        //include FP_PATH . "admin/$view.php";
+        require ABS_PATH . 'src/framework/View/' . $view;
+        #ob_flush();
+        #return ob_end_clean();
     }
 
     /**
@@ -156,19 +163,19 @@ class ErrorHandler
      * Undocumented function long description
      *
      * @param Type $var Description
-     * @return type
+     * @return array
      * @throws conditon
      **/
     protected function collectVars(Throwable $e): array
     {
         $data = [
-            //'title'   => get_class($e),
-            //'code'    => $e->getCode(),
+            'title'   => get_class($e),
+            'code'    => $e->getCode(),
             'message' => $e->getMessage() ?? '(null)',
             'file'    => $e->getFile(),
             'line'    => $e->getLine(),
             'a_trace'   => $e->getTrace(),
-            's_trace'   => $e->getTraceAsString(),
+            //'s_trace'   => $e->getTraceAsString(),
         ];
 
         if ($e instanceof ErrorException) {
@@ -234,18 +241,12 @@ class ErrorHandler
      * @return type
      * @throws conditon
      **/
-    protected function determineView(Int $code, bool $env = false)
+    protected function determineView(Int $code)
     {
-        foreach (new DirectoryIterator(FP_THEMES . env('template')) as $fileinfo) {
-            if ($fileinfo->getFilename() == '404.php' && $fileinfo->getFilename() == 'error.php') {
-                $this->templ = false;
-            }
-        }
-
         // Error 404
-        if ($code == 404) return '404';
+        if ($code == 404) return '404.php';
 
-        return (!$env) ? 'error' : 'debug';
+        return ($this->env) ? 'debug.php' : 'error.php';
     }
 
     /**
@@ -257,7 +258,7 @@ class ErrorHandler
      * @return type
      * @throws conditon
      **/
-    public function logs()
+    protected function logs()
     {
         // implementar para q no registre los errores 404
         if (env('logs')/* && !in_array($statusCode, $this->config->ignoreCodes, true)*/) {
