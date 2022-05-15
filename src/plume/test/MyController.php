@@ -1,16 +1,13 @@
 <?php
 namespace Tester;
-class MyController{
-    public function __construct()
-    {
-        //code
-    }
+
+use Plume\Kernel\Controllers;
+
+class MyController extends Controllers{
 
     public function index()
     {
-        echo <<<HTML
-        <h1>Sea bienvenido</h1>
-        HTML
+        echo '<h1>Sea bienvenido</h1>'.date('h:i a');
     }
     public function name($name = 'Plume')
     {
