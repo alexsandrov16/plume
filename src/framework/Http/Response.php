@@ -100,8 +100,9 @@ class Response
 
     use MessageHttp;
 
-    public function __construct()
+    public function __construct(Int $status = 200, $headers = [])
     {
+        return $this->send($status, $headers);
     }
 
     /** 
@@ -179,8 +180,8 @@ class Response
 
         header('HTTP/'.$this->getProtocolVersion().' '.$this->getStatusCode().' '.$this->getReasonPhrase());
 
-        foreach ($this->getHeaders() as $name => $value) {
+        /*foreach ($this->getHeaders() as $name => $value) {
             header("$name: $value");
-        }
+        }*/
     }
 }

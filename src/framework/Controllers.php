@@ -2,6 +2,8 @@
 
 namespace Plume\Kernel;
 
+use Plume\Kernel\Http\Response;
+
 defined('PLUME') || die;
 
 /**
@@ -11,5 +13,6 @@ class Controllers extends App
 {
     public function __construct()
     {
+        $this->response = new Response(200);
     }
 }

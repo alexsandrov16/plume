@@ -43,7 +43,7 @@ class App
      * debugbar
      */
     public function __destruct()
-    {
+    {/*
         $memory = round((memory_get_usage() - self::$memory) / (1024 * 1024), 4);
 
         $time = round((microtime(true) - self::$microtime) * 1000, 4);
@@ -64,9 +64,9 @@ class App
             </span>
         </div>
         <style>
-        .debug{position:fixed;bottom:0;left:0;height:2em;width:100%;padding:0 1em;background:#454545;color:#fff;display:flex;align-items:center;}
+        .debug{position:fixed;bottom:0;left:0;height:2em;width:100%;padding:0 1em;background:#2B2A33;color:#fff;display:flex;align-items:center;}
         .debug span{margin-right:1.15em;display:flex;line-height: 1;}.debug svg{fill:#fff;margin-right:.25em}
         </style>
-        HTML;
+        HTML;*/
     }
 }
