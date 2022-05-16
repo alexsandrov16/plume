@@ -35,8 +35,10 @@ class App
 
     public function run()
     {
-        //require ABS_PATH . 'src/plume/index.html';
-        require ABS_PATH . 'src/plume/router.php';
+        //tester
+        //require ABS_PATH . 'tester/tester.php';
+
+        //require ABS_PATH . 'src/plume/router.php';
     }
 
     /**

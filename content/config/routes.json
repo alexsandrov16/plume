@@ -1,0 +1,8 @@
+{
+    "/": {
+        "method": "get",
+        "action": {
+            "Tester\\MyController::class": "index"
+        }
+    }
+}
