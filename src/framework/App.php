@@ -38,7 +38,7 @@ class App
         //tester
         //require ABS_PATH . 'tester/tester.php';
 
-        //require ABS_PATH . 'src/plume/router.php';
+        require ABS_PATH . 'src/plume/routes.php';
     }
 
     /**

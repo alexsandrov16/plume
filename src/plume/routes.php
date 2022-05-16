@@ -8,12 +8,12 @@ $rute = new Rute;
 {
     echo 'Welcome back';
 });*/
+$rt = 'dfg';
 
-$rute->group('/admin', function() use $rute
+$rute->group('/admin', function () use ($rute)
 {
-    $rute->get('/');
-    $rute->get('/');
-    $rute->get('/');
+    $rute->get("/$algo", ['asd']);
 });
+
 
 $rute->routing();

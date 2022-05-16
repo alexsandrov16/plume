@@ -33,7 +33,7 @@ class Rute
         $this->rutes[$rute] = [
             'method' => $method,
             'action' => $action,
-            'opstions' => $options
+            'options' => $options
         ];
     }
 
@@ -124,6 +124,21 @@ class Rute
     public function setAll(array $rutes)
     {
         $this->rutes = $rutes;
+    }
+
+    /**
+     * Agrupar rutas
+     *
+     * Undocumented function long description
+     *
+     * @param Type $var Description
+     * @return type
+     * @throws conditon
+     **/
+    public function group(string $rute, $callback)
+    {
+        $callback();
+        return var_dump($this->getAll());
     }
 
     /**
