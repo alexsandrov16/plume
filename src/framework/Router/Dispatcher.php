@@ -104,7 +104,6 @@ class Dispatcher
         if (is_object($actions)) {
             $reflaction = new ReflectionFunction($actions);
 
-
             if (empty($reflaction->getParameters())) {
                 return $actions();
             }

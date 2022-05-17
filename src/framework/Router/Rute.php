@@ -137,8 +137,7 @@ class Rute
      **/
     public function group(string $rute, $callback)
     {
-        $callback();
-        return var_dump($this->getAll());
+        #code...
     }
 
     /**

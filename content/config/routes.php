@@ -9,11 +9,11 @@ $rute = new Rute;
     echo 'Welcome back';
 });*/
 
-$rute->group('/admin', function() use $rute
+$rute->group('/admin', function() use ($rute)
 {
-    $rute->get('/');
-    $rute->get('/');
-    $rute->get('/');
+    $rute->get('/',[]);
+    $rute->get('/',[]);
+    $rute->get('/',[]);
 });
 
 $rute->routing();

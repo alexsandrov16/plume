@@ -21,7 +21,7 @@ defined('PLUME') || die;
     <div class="source container">
         <div class="titlebar">
             <p>
-                <?= str_replace(ABS_PATH, '../', $file), '[', $line, ']' ?>
+                <?= str_replace(ABS_PATH, '..'.DS, $file), '[', $line, ']' ?>
             </p>
             <div style="float: right;">
                 <span class="dot" style="background:#ED594A;"></span>

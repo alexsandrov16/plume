@@ -16,7 +16,7 @@ class App
     const _version = '0.6 alpha';
     const php_version = 7.3;
     private static $memory;
-    private static $microtime;
+    /*private*/ static $microtime;
 
     /** @var Type $var description */
     protected $config;
@@ -45,7 +45,7 @@ class App
      * debugbar
      */
     public function __destruct()
-    {/*
+    {
         $memory = round((memory_get_usage() - self::$memory) / (1024 * 1024), 4);
 
         $time = round((microtime(true) - self::$microtime) * 1000, 4);
@@ -69,6 +69,6 @@ class App
         .debug{position:fixed;bottom:0;left:0;height:2em;width:100%;padding:0 1em;background:#2B2A33;color:#fff;display:flex;align-items:center;}
         .debug span{margin-right:1.15em;display:flex;line-height: 1;}.debug svg{fill:#fff;margin-right:.25em}
         </style>
-        HTML;*/
+        HTML;
     }
 }
