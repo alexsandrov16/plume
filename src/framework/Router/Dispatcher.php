@@ -2,6 +2,7 @@
 
 namespace Plume\Kernel\Router;
 
+use Exception;
 use Plume\Kernel\Http\Request;
 use Plume\Kernel\Http\Uri;
 use ReflectionFunction;
@@ -49,7 +50,7 @@ class Dispatcher
                 }
             }
         }
-        //throw new Exception("Error Processing Request", 404);
+        throw new Exception("Page not found", 404);
         
     }
 
@@ -112,9 +113,10 @@ class Dispatcher
         }
 
         if (is_array($actions)) {
-            if (class_exists($actions[0])) {
-                $instance = new $actions[0];
-                $method = $actions[1];
+            $controller = $actions[0];
+            $method = $actions[1];
+            if (class_exists($controller)) {
+                $instance = new $controller;
 
                 if (empty($method)) {
                     return $instance->index();
@@ -131,11 +133,11 @@ class Dispatcher
 
                         return call_user_func_array(array($instance, $method), $params);
                     }
-                    //throw new Exception("Method not public $controller::$method");
+                    throw new Exception("Method not public $controller::$method");
                 }
-                //throw new Exception("Not Found Method $controller::$method");
+                throw new Exception("Not Found Method $controller::$method");
             }
-            //throw new Exception("Not Found Controller $controller");
+            throw new Exception("Not Found Controller $controller");
         }
     }
 

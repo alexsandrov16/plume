@@ -26,18 +26,14 @@ class ErrorHandler
      * @return type
      * @throws conditon
      **/
-    public function __construct(Bool $env)
+    public function __construct(Bool $env = false)
     {
         $this->ob_level = ob_get_level();
         $this->env = $env;
 
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
-        if ($this->env) {
-            error_reporting(E_ALL);
-        } else {
-            error_reporting(0);
-        }
+        error_reporting(E_ALL);
     }
 
     /**
