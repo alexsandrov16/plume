@@ -148,7 +148,7 @@ class ErrorHandler
         #if (ob_get_length()) ob_end_clean();
         extract($this->collectVars($e));
         //include FP_PATH . "admin/$view.php";
-        require ABS_PATH . 'src/framework/View/' . $view;
+        require ABS_PATH . 'src/core/View/' . $view;
         #ob_flush();
         #return ob_end_clean();
     }

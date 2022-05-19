@@ -13,6 +13,8 @@ class Rute
     /** @var array $rutes matriz de todas las rutas y sus asignaciones. */
     private $rutes = [];
 
+    private $group;
+
     /**
      * Añadir ruta
      *
@@ -27,10 +29,10 @@ class Rute
      **/
     private function add($method, string $rute, $action, array $options)
     {
-        if (key_exists($rute, $this->getAll())) {
-            die('error ya existe esa ruta');
+        if (key_exists($this->group.$rute, $this->getAll())) {
+            die("error ya existe a ruta $rute");
         }
-        $this->rutes[$rute] = [
+        $this->rutes[$this->group.$rute] = [
             'method' => $method,
             'action' => $action,
             'options' => $options
@@ -137,7 +139,9 @@ class Rute
      **/
     public function group(string $rute, $callback)
     {
-        #code...
+        $this->group = $rute;
+        $callback($this);
+        $this->group = null;
     }
 
     /**

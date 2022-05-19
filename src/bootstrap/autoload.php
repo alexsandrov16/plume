@@ -6,8 +6,8 @@ defined('PLUME') || die;
  */
 
 $namespace = [
-    'Plume'        => '',
-    'Plume\Kernel' => 'src/framework',
+    'Plume'        => 'src/plume',
+    'Plume\Kernel' => 'src/core',
     'Tester'       => 'tester'
 ];
 

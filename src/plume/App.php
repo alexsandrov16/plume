@@ -1,6 +1,6 @@
 <?php
 
-namespace Plume\Kernel;
+namespace Plume;
 
 use Plume\Kernel\Config\Config;
 use Plume\Kernel\Debug\ErrorHandler;
@@ -38,6 +38,11 @@ class App
         //tester
         //require ABS_PATH . 'tester/tester.php';
 
-        require ABS_PATH . 'src/plume/routes.php';
+        require ABS_PATH . 'src/routes.php';
+    }
+
+    public function install()
+    {
+        # code...
     }
 }

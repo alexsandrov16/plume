@@ -64,7 +64,7 @@ class Dispatcher
      **/
     private function placeholder(string $rute)
     {
-        return preg_replace(array_keys($this->regex), array_values($this->regex), $rute);
+        return trim(preg_replace(array_keys($this->regex), array_values($this->regex), $rute), '/');
     }
 
     /**
@@ -173,6 +173,6 @@ class Dispatcher
     {
         //agregar base_uri
         $uri = new Uri(env('base_url'));
-        return str_replace($uri->getPath(), '', $this->request->getRequestTarget());
+        return trim(str_replace($uri->getPath(), '', $this->request->getRequestTarget()), '/');
     }
 }

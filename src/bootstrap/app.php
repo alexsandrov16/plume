@@ -19,9 +19,9 @@ require_once 'defines.php';
 require_once 'autoload.php';
 
 //Functions 
-require_once ABS_PATH . 'src/framework/functions.php';
+require_once ABS_PATH.'src/functions.php';
 
 //Installing CMS esto ba en el fichero index
-if (file_exists(ABS_PATH . 'installphp')) {
+/*if (file_exists(ABS_PATH . 'install.php')) {
     require 'install.php';
-}
+}*/

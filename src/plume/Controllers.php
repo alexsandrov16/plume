@@ -1,6 +1,6 @@
 <?php
 
-namespace Plume\Kernel;
+namespace Plume;
 
 use Plume\Kernel\Http\Response;
 

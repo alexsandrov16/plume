@@ -4,7 +4,7 @@
  * @package Plume
  */
 
-use Plume\Kernel\App;
+use Plume\App;
 
 $memory = memory_get_usage();
 $time = microtime(true);
