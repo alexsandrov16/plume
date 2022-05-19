@@ -52,7 +52,7 @@ function source($file, $line, $limit_line = 35)
         $n++;
 
         if ($n == $line) {
-            $out .= "<span class='line-error'><span class='number'>$n </span> $value\n</span>";
+            $out .= "<p class='line-error'><span class='number'>$n </span> $value\n</p>";
         }
 
         if ($n >= $start && $n != $line && $n <= $end) {
