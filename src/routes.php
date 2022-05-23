@@ -12,9 +12,8 @@ $rute->get('/', function () {
 
 $rute->group('/admin', function($rute)
 {
-    $rute->get('/', function(){
-        echo 'ADMIN DASHBOARD';
-    });
+    $rute->get('/', [Plume\Controller\Dashboard::class]);
+
     $rute->get('/user', function(){
         echo 'USER DASHBOARD';
     });

@@ -131,9 +131,7 @@ $rute->group('/admin', function($rute)
     $rute->get('/blogs', function(){
         echo 'ADMIN DASHBOARD';
     });
-    $rute->get('/users', [function(){
-        echo 'USER DASHBOARD';
-    }]);
+    $rute->get('/users', [Foo\Bar\Controller::class,'user']);
 });
 ```
 

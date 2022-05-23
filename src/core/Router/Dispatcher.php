@@ -51,7 +51,6 @@ class Dispatcher
             }
         }
         throw new Exception("Page not found", 404);
-        
     }
 
     /**
@@ -102,6 +101,7 @@ class Dispatcher
      **/
     private function callActions($actions, $params)
     {
+        //Callback Fun
         if (is_object($actions)) {
             $reflaction = new ReflectionFunction($actions);
 
@@ -112,25 +112,29 @@ class Dispatcher
             return call_user_func_array($actions, $params);
         }
 
+        //Callback Object
         if (is_array($actions)) {
             $controller = $actions[0];
-            $method = $actions[1];
+
+            //Class exists
             if (class_exists($controller)) {
                 $instance = new $controller;
 
-                if (empty($method)) {
+                if (empty($actions[1])) {
                     return $instance->index();
                 }
 
+                //Method exists
+                $method = $actions[1];
                 if (method_exists($instance, $method)) {
                     $reflaction = new \ReflectionMethod($instance, $method);
 
                     if ($reflaction->isPublic()) {
-
+                        //empty Param
                         if (empty($reflaction->getParameters())) {
                             return $instance->$method();
                         }
-
+                        //Llamar metodo con parametros
                         return call_user_func_array(array($instance, $method), $params);
                     }
                     throw new Exception("Method not public $controller::$method");
