@@ -62,3 +62,20 @@ function source($file, $line, $limit_line = 35)
 
     return "<pre><code>$out</code></pre>";
 }
+
+function view(string $filename, array $data, bool $adm = false)
+{
+    //$file = ($adm) ? PATH_THEMES.env('adm_temp').DS."$filename.php" : PATH_THEMES.env('site_temp').DS."$filename.php" ;
+    $file = PATH_THEMES.env('adm_temp').DS."$filename.php";
+
+    foreach ($data as $key => $value) {
+        $$key = $value;
+    }
+
+    if (file_exists($file)) {
+        ob_start();
+        include $file;
+        return ob_flush();
+    }
+    throw new Exception("Not Found file <b>$file</b>");
+}

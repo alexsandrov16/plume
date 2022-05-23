@@ -26,3 +26,6 @@ defined('PATH_CFG') || define('PATH_CFG', ABS_PATH . 'content' . DS . 'config' .
 defined('PATH_PAGES') || define('PATH_PAGES', ABS_PATH . 'content' . DS . 'pages' . DS);
 defined('PATH_LOGS') || define('PATH_LOGS', ABS_PATH . 'content' . DS . 'logs' . DS);
 defined('PATH_UPLOAD') || define('PATH_UPLOAD', ABS_PATH . 'content' . DS . 'upload' . DS);
+
+//themes
+defined('PATH_THEMES') || define('PATH_THEMES', ABS_PATH . 'themes' . DS);
