@@ -1,5 +1,6 @@
 <?php
 
+use Plume\Kernel\Cookies\Session;
 use Plume\Kernel\Router\Rute;
 
 $rute = new Rute;
@@ -10,16 +11,14 @@ $rute->get('/', function () {
     echo file_get_contents($file);
 });
 
-$rute->group('/admin', function($rute)
-{
-    $rute->get('/', [Plume\Controller\Dashboard::class]);
+$rute->group('/admin', function ($rute) {
+        $rute->get('/', [Plume\Controller\Dashboard::class]);
 
-    $rute->get('/user', function(){
-        echo 'USER DASHBOARD';
-    });
+        $rute->get('/user', [Plume\Controller\Dashboard::class, 'users']);
+        $rute->get('/off', [Plume\Controller\Dashboard::class, 'off']);
 });
 
-$rute->get('/(:any)', function(){
+$rute->get('/(:any)', function () {
     echo 'Pagina cualkiera';
 });
 
