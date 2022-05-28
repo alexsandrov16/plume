@@ -50,7 +50,7 @@ class Dispatcher
                 }
             }
         }
-        throw new Exception("Page not found", 404);
+        throw new Exception("Page Not Found", 404);
     }
 
     /**
