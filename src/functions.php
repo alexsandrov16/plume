@@ -29,7 +29,7 @@ function env(string $name)
  * @return type
  * @throws conditon
  **/
-function source($file, $line, $limit_line = 35)
+function source($file, $line, $limit_line = 15)
 {
 
     ini_set('highlight.default', '"class="default');
@@ -65,8 +65,8 @@ function source($file, $line, $limit_line = 35)
 
 function view(string $filename, array $data, bool $adm = false)
 {
-    //$file = ($adm) ? PATH_THEMES.env('adm_temp').DS."$filename.php" : PATH_THEMES.env('site_temp').DS."$filename.php" ;
-    $file = PATH_THEMES.env('adm_temp').DS."$filename.php";
+    //$file = ($adm) ? PATH_THEMES.env('adm_theme').DS."$filename.php" : PATH_THEMES.env('web_theme').DS."$filename.php" ;
+    $file = PATH_THEMES.env('adm_theme').DS."$filename.php";
 
     foreach ($data as $key => $value) {
         $$key = $value;

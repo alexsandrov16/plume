@@ -126,7 +126,7 @@ class ErrorHandler
         /*if (! isset($view)) {
             echo 'The error view files were not found. Cannot render exception trace.';
             exit(1);
-        }*//*
+        }*/
 
         if (ob_get_level() > $this->ob_level + 1) {
             ob_clean();
@@ -142,15 +142,14 @@ class ErrorHandler
             return ob_get_clean();
         })();*/
 
-        $request = new Request;
         $headers = [];
         $response = $e->getCode() != 404 ? new Response(500, $headers) : new Response(404, $headers);
-        #if (ob_get_length()) ob_end_clean();
+        if (ob_get_length()) ob_end_clean();
         extract($this->collectVars($e));
         //include FP_PATH . "admin/$view.php";
-        require ABS_PATH . 'src/core/View/' . $view;
-        #ob_flush();
-        #return ob_end_clean();
+        require ABS_PATH . 'src/pages/' . $view;
+        ob_flush();
+        return ob_end_clean();
     }
 
     /**
@@ -170,7 +169,7 @@ class ErrorHandler
             'message' => $e->getMessage() ?? '(null)',
             'file'    => $e->getFile(),
             'line'    => $e->getLine(),
-            'a_trace'   => $e->getTrace(),
+            'traces'   => $e->getTrace(),
             //'s_trace'   => $e->getTraceAsString(),
         ];
 
