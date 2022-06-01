@@ -63,10 +63,18 @@ function source($file, $line, $limit_line = 15)
     return "<pre><code>$out</code></pre>";
 }
 
+/**
+ * undocumented function summary
+ *
+ * Undocumented function long description
+ *
+ * @param Type $var Description
+ * @return mixed
+ * @throws conditon
+ **/
 function view(string $filename, array $data, bool $adm = false)
 {
-    //$file = ($adm) ? PATH_THEMES.env('adm_theme').DS."$filename.php" : PATH_THEMES.env('web_theme').DS."$filename.php" ;
-    $file = PATH_THEMES.env('adm_theme').DS."$filename.php";
+    $file = ($adm) ? PATH_THEMES.env('adm_theme').DS."$filename.php" : PATH_THEMES.env('web_theme').DS."$filename.php" ;
 
     foreach ($data as $key => $value) {
         $$key = $value;
@@ -78,4 +86,18 @@ function view(string $filename, array $data, bool $adm = false)
         return ob_flush();
     }
     throw new Exception("Not Found file <b>$file</b>");
+}
+
+/**
+ * undocumented function summary
+ *
+ * Undocumented function long description
+ *
+ * @param Type $var Description
+ * @return mixed
+ * @throws conditon
+ **/
+function redirect($path = '/')
+{
+    return preg_match('#http://#', $path) ? header("Location:$path") : header('Location:'.env('base_url').$path) ;
 }
