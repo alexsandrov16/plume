@@ -76,6 +76,7 @@ ul li .source.active {
 pre {
     background-color: #52555e;
     overflow-x: scroll;
+    padding: 0 0.5em;
 }
 
 code {
