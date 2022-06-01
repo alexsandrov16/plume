@@ -4,7 +4,7 @@
     "base_url"    : "http://localhost/plume",
     "debug"       : true,
     "adm_theme"    : "pico",
-    "web_theme"    : "default",
+    "web_theme"    : "skeleton",
     "timezone"    : "America/Havana",
     "time_format" : "Y-m-d H:i:s",
     "language"    : "es-ES",
