@@ -4,6 +4,7 @@ namespace Plume\Controller;
 
 use Plume\Controllers;
 use Plume\Kernel\Cookies\Session;
+use Plume\Kernel\File\Json;
 
 defined('PLUME') || die;
 
@@ -16,10 +17,11 @@ class Dashboard extends Controllers
     {
         parent::__construct();
 
-        $this->session = new Session();
+        $this->session = new Session([
+            'name' => env('session_name')
+        ]);
 
         $this->session->start();
-        $this->session->set('user', 'admin');
     }
 
     /**
@@ -33,15 +35,33 @@ class Dashboard extends Controllers
      **/
     public function index()
     {
-        if ($this->session->has('user')) {
+        if ($this->session->has('active')) {
             return view(__FUNCTION__, [
                 'title' => parent::_name,
                 'user' => $this->session->get('user')
             ], true);
         }
-        return view('login', [
-            'title' => parent::_name,
-        ], true);
+        
+        if ($_POST) {
+
+            //Model
+            $data = Json::get(PATH_CFG.'user');
+            if (key_exists($_POST['user'],$data)) {
+                
+                if (password_verify($_POST['pass'], $data[$_POST['user']]['hash'])) {
+                    $this->session->set('active', true);
+                    $this->session->set('user', $_POST['user']);
+                    return redirect('/admin');
+                }
+                die('Pass invalid');
+            }
+            die('User invalid');
+
+        } else {
+            return view('login', [
+                'title' => parent::_name,
+            ], true);
+        }
     }
 
     public function users()
@@ -52,5 +72,6 @@ class Dashboard extends Controllers
     public function off()
     {
         $this->session->destroy();
+        return redirect('/');
     }
 }
